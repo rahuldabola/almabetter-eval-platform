@@ -1,0 +1,32 @@
+name: ci
+on: [push, pull_request]
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: pgvector/pgvector:pg16
+        env: { POSTGRES_USER: eval, POSTGRES_PASSWORD: eval, POSTGRES_DB: eval }
+        ports: ["5432:5432"]
+        options: --health-cmd "pg_isready -U eval" --health-interval 5s --health-retries 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: "3.11", cache: pip }
+      - run: pip install -r requirements-dev.txt
+      - run: ruff check app tests scripts
+      - name: tests (SQLite)
+        run: pytest -q
+      - name: tests (PostgreSQL - exercises SKIP LOCKED + partial unique indexes)
+        env: { TEST_DATABASE_URL: "postgresql+psycopg://eval:eval@localhost:5432/eval" }
+        run: pytest -q
+      - name: end-to-end demo
+        run: python -m scripts.demo > /dev/null
+  image:
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: docker build -t eval-platform:${{ github.sha }} .
+      # Production pipeline continues: trivy scan -> push to ECR -> deploy to staging
+      # -> smoke test -> manual approval -> ECS rolling deploy with circuit breaker.

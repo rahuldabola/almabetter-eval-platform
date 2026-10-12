@@ -1,0 +1,221 @@
+
+=== POST /v1/submissions -> 201
+{
+  "id": "f403dbcd58d44ae898ffbb8d1fe06175",
+  "assignment_id": "ffdd2c1d9e8841ad9c7219334b9b892a",
+  "student_id": "779b92cd81e44f949514d32a9b08bec2",
+  "attempt_no": 1,
+  "status": "draft",
+  "created_at": "2026-10-12T16:43:57.988526Z",
+  "artifacts": [
+    {
+      "id": "eb299603710d4d74a3d9ee7c99e12425",
+      "kind": "zip",
+      "status": "pending_upload",
+      "source_url": null,
+      "filename": "project.zip",
+      "size_bytes": null,
+      "sha256": null,
+      "upload_url": "/v1/submissions/f403dbcd58d44ae898ffbb8d1fe06175/artifacts/eb299603710d4d74a3d9ee7c99e12425/content"
+    }
+  ],
+  "latest_job_id": null
+}
+
+=== upload 6399 bytes -> 200
+{
+  "id": "eb299603710d4d74a3d9ee7c99e12425",
+  "kind": "zip",
+  "status": "stored",
+  "source_url": null,
+  "filename": "project.zip",
+  "size_bytes": 6399,
+  "sha256": "4c2cab6fd823d311a578f8cf59fb49b2701643e0583c9fa435baddc8c4f7bd1f",
+  "upload_url": null
+}
+POST /evaluations call 1: HTTP 202 job=f332e5b6363b4413826bc43c44736ef0
+POST /evaluations call 2: HTTP 200 job=f332e5b6363b4413826bc43c44736ef0
+POST /evaluations call 3: HTTP 200 job=f332e5b6363b4413826bc43c44736ef0
+POST /evaluations call 4: HTTP 200 job=f332e5b6363b4413826bc43c44736ef0
+POST /evaluations call 5: HTTP 200 job=f332e5b6363b4413826bc43c44736ef0
+-> distinct jobs created: 1
+
+=== GET /v1/evaluations/{id}
+{
+  "job_id": "f332e5b6363b4413826bc43c44736ef0",
+  "submission_id": "f403dbcd58d44ae898ffbb8d1fe06175",
+  "rubric_id": "27d6e2c13ba8473f9c671b5ad16a4027",
+  "status": "succeeded",
+  "current_stage": "aggregate",
+  "progress": 100,
+  "attempts": 1,
+  "max_attempts": 3,
+  "last_error_code": null,
+  "created_at": "2026-10-12T16:43:58.056841Z",
+  "finished_at": "2026-10-12T16:44:12.364450Z"
+}
+
+=== GET result (evaluator view)
+{
+  "result_id": "c5345f5f04d546858ff6b42f213757a2",
+  "submission_id": "f403dbcd58d44ae898ffbb8d1fe06175",
+  "status": "approved",
+  "total_score": 81.25,
+  "overall_confidence": 1.0,
+  "summary": "To build a task-management REST API with authentication, persistence, tests, and documentation using Python and FastAPI. A layered Python application structured with a FastAPI entrypoint, service layer for business logic, repository layer for SQLite database interaction, Pydantic schemas for data validation, and an authentication module using JWT and bcrypt.",
+  "flags": [],
+  "model": "gemini-flash-lite-latest",
+  "prompt_version": "eval-v1.2",
+  "rubric_id": "27d6e2c13ba8473f9c671b5ad16a4027",
+  "criteria": [
+    {
+      "criterion_key": "code_quality",
+      "score": 8.5,
+      "max_score": 10.0,
+      "confidence": 1.0,
+      "rationale": "The codebase is clean, well-structured, and idiomatic Python using FastAPI, Pydantic, and JWT authentication. It includes clear modular separation (main, auth, services, schemas) and unit tests with mocking for business logic. Error handling is correctly implemented using FastAPI's HTTPException and status codes.",
+      "strengths": [
+        "Clear modular architecture separating routes, services, and authentication.",
+        "Appropriate use of FastAPI dependency injection and exception handling.",
+        "Includes meaningful unit tests with mocking for service logic."
+      ],
+      "improvements": [
+        "Test coverage could be expanded to cover more edge cases and integration tests.",
+        "Hardcoded user stores in authentication can be moved to a repository layer."
+      ],
+      "evidence": [
+        {
+          "ref": "zip_eb299603/app/main.py:7",
+          "quote": "app = FastAPI(title=\"Task Manager\")",
+          "verified": true
+        },
+        {
+          "ref": "zip_eb299603/app/auth.py:24",
+          "quote": "def current_user(authorization: str = Header(...)):",
+          "verified": true
+        },
+        {
+          "ref": "zip_eb299603/tests/test_services.py:12",
+          "quote": "def test_update_rejects_other_users_task(monkeypatch):",
+          "verified": true
+        }
+      ]
+    },
+    {
+      "criterion_key": "innovation_ai_usage",
+      "score": 0.0,
+      "max_score": 10.0,
+      "confidence": 1.0,
+      "rationale": "The project is a standard task-management REST API built with FastAPI, SQLite, and JWT authentication. There are no creative features, AI/LLM integrations, prompt engineering, evaluation, or guardrails implemented within the project. Therefore, it falls under the 0-4.9 scoring band as there is no innovation beyond the brief.",
+      "strengths": [],
+      "improvements": [
+        "Incorporate meaningful AI or LLM features such as smart task categorization, natural language task creation, or priority suggestions."
+      ],
+      "evidence": [
+        {
+          "ref": "zip_eb299603/README.md:1",
+          "quote": "# Task Manager API",
+          "verified
+
+=== GET result (student view) -> 200
+{
+  "result_id": "c5345f5f04d546858ff6b42f213757a2",
+  "submission_id": "f403dbcd58d44ae898ffbb8d1fe06175",
+  "status": "approved",
+  "total_score": 81.25,
+  "overall_confidence": null,
+  "summary": "To build a task-management REST API with authentication, persistence, tests, and documentation using Python and FastAPI. A layered Python application structured with a FastAPI entrypoint, service layer for business logic, repository layer for SQLite database interaction, Pydantic schemas for data validation, and an authentication module using JWT and bcrypt.",
+  "flags": null,
+  "model": null,
+  "prompt_version": null,
+  "rubric_id": "27d6e2c13ba8473f9c671b5ad16a4027",
+  "criteria": [
+    {
+      "criterion_key": "code_quality",
+      "score": 8.5,
+      "max_score": 10.0,
+      "confidence": null,
+      "rationale": "The codebase is clean, well-structured, and idiomatic Python using FastAPI, Pydantic, and JWT authentication. It includes clear modular separation (main, auth, services, schemas) and unit tests with mocking for business logic. Error handling is correctly implemented using FastAPI's HTTPException and status codes.",
+      "strengths": [
+        "Clear modular architecture separating routes, services, and authentication.",
+        "Appropriate use of FastAPI dependency injection and exception handling.",
+        "Includes meaningful unit tests with mocking for service logic."
+      ],
+      "improvements": [
+        "Test coverage could be expanded to cover more edge cases and integration tests.",
+        "Hardcoded user stores in authentication can be moved to a repository layer."
+      ],
+      "evidence": [
+        {
+          "ref": "zip_eb299603/app/main.py:7",
+          "quote": "app = FastAPI(title=\"Task Manager\")",
+          "verified": true
+        },
+        {
+          "ref": "zip_eb299603/app/auth.py:24",
+          "quote": "def current_user(authorization: str = Header(...)):",
+          "verified": true
+        },
+        {
+          "ref": "zip_eb299603/tests/test_services.py:12",
+          "quote": "def test_update_rejects_other_users_task(monkeypatch):",
+          "verified": true
+        }
+      ]
+    },
+    {
+      "criterion_key": "innovation_ai_usage",
+      "score": 0.0,
+      "max_score": 10.0,
+      "confidence": null,
+      "rationale": "The project is a standard task-management REST API built with FastAPI, SQLite, and JWT authentication. There are no creative features, AI/LLM integrations, prompt engineering, evaluation, or guardrails implemented within the project. Therefore, it falls under the 0-4.9 scoring band as there is no innovation beyond the brief.",
+      "strengths": [],
+      "improvements": [
+        "Incorporate meaningful AI or LLM features such as smart task categorization, natural language task creation, or priority suggestions."
+      ],
+      "evidence": [
+        {
+          "ref": "zip_eb299603/README.md:1",
+          "quote": "# Task Manager API",
+          "verified": true
+        }
+      
+
+=== review queue item
+{
+  "review_id": "0005010cca514855858722ca4cbf532b",
+  "result_id": "c5345f5f04d546858ff6b42f213757a2",
+  "status": "requested",
+  "reason": "Spot-check of an AI evaluation",
+  "reviewer_id": null,
+  "overrides": {},
+  "decision_comment": null,
+  "created_at": "2026-10-12T16:44:12.488241Z",
+  "decided_at": null
+}
+
+=== POST decision -> 200
+{
+  "review_id": "0005010cca514855858722ca4cbf532b",
+  "result_id": "c5345f5f04d546858ff6b42f213757a2",
+  "status": "approved",
+  "reason": "Spot-check of an AI evaluation",
+  "reviewer_id": "01cfc6dc81ce43deb2e6194bb008f0b3",
+  "overrides": {
+    "documentation": {
+      "from": 9.0,
+      "to": 9.0,
+      "comment": "README covers setup, endpoints and design"
+    }
+  },
+  "decision_comment": "Checked the code; documentation deserves more credit.",
+  "created_at": "2026-10-12T16:44:12.488241Z",
+  "decided_at": "2026-10-12T16:44:12.536386Z",
+  "result_status": "approved",
+  "total_score": 81.25,
+  "re_evaluation_job_id": null
+}
+
+student can now see the result: HTTP 200, total=81.25
+
+(demo db + storage in <temp dir>)
