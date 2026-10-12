@@ -1,7 +1,7 @@
 # AI-Powered Project Evaluation Platform — Backend Architecture
 
 **SDE-II Backend Architecture Assignment · AlmaBetter**
-Author: Rahul Dabola · Companion proof-of-concept: this repository (`app/`, `tests/`, `scripts/demo.py`)
+Author: Rahul Dabola · Companion proof-of-concept: <https://github.com/rahuldabola/almabetter-eval-platform> (`app/`, `tests/`, `scripts/demo.py`)
 
 ---
 
